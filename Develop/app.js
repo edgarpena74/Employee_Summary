@@ -39,34 +39,85 @@ const employeeTitle = [
         message: "What is the employees title? ",
         choices: ["Engineer", "Intern", "Manager"]
     }
-];
+]
+
+const askNew = [
+    {
+        type: "list",
+        name: "newEmployee",
+        message: "Would you like to add a new employee? ",
+        choices: ["Yes", "No"]
+    }
+]
 
 function engineer() {
-    inquirer.prompt([
-        employeeInfo,
-        {
+    inquirer.prompt(employeeInfo)
+    .then(res => {
+        console.log(res)
+        inquirer.prompt({
             type: "input",
             name: "github",
             message: "What is the employees GitHub username? "
-        }
-    ])
-        
-      
-    
+        })
+    })
 } 
+
+function intern() {
+    inquirer.prompt(employeeInfo)
+    .then(res => {
+        console.log(res)
+        inquirer.prompt({
+            type: "input",
+            name: "school",
+            message: "What school is the intern attending? "
+        })
+    })
+}
+
+function manager() {
+    inquirer.prompt(employeeInfo)
+    .then(res => {
+        console.log(res)
+        inquirer.prompt({
+            type: "input",
+            name: "officeNumber",
+            message: "what is the managers office number?  "
+        })
+    })
+}
 
 
 function init(){
     inquirer.prompt(employeeTitle)
 
     .then(res => {
-        if(res.employeeTitle === "Engineer"){
+        if(res.title === "Engineer"){
             engineer()
+        } else if(res.title === "Intern"){
+            intern()
+        } else if(res.title === "Manager"){
+            manager()
+        }
+    })
+    
+}
+
+function addNew(){
+    inquirer.prompt(askNew)
+    .then(res => {
+        if (res.newEmployee === "Yes"){
+            init()
+        } else if (res.newEmployee === "No"){
+            console("Put render function here")
         }
     })
 }
-console.log("This thing")
-init()
+
+function begin(){
+  
+}
+
+begin()
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
