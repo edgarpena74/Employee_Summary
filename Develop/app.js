@@ -110,14 +110,11 @@ function addNew(){
         } else if (res.newEmployee === "No"){
             console("Put render function here")
         }
+        inquirer.prompt(askNew)
     })
 }
 
-function begin(){
-  
-}
-
-begin()
+addNew()
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
