@@ -110,7 +110,7 @@ function addNew(){
         } else if (res.newEmployee === "No"){
             console("Put render function here")
         }
-        inquirer.prompt(askNew)
+       
     })
 }
 
