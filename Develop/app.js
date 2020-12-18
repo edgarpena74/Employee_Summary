@@ -14,23 +14,8 @@ const render = require("./lib/htmlRenderer");
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
-const employeeInfo = [
-    {
-        type: "input",
-        name: "name",
-        message: "What is the employees name? "
-    },
-    {
-        type: "input",
-        name: "id",
-        message: "What is the employees ID? "
-    },
-    {
-        type: "input",
-        name: "email",
-        message: "What is the employees email? "
-    }
-]
+let teamArr = []
+let teamId = []
 
 const employeeTitle = [
     {
@@ -50,71 +35,237 @@ const askNew = [
     }
 ]
 
-function engineer() {
-    inquirer.prompt(employeeInfo)
-    .then(res => {
-        console.log(res)
-        inquirer.prompt({
-            type: "input",
-            name: "github",
-            message: "What is the employees GitHub username? "
-        })
-    })
-} 
+const engineer = [
+    {
+        type: "input",
+        name: "name",
+        message: "What is the employees name? ",
+        validate: name => {
+            if (name){
+                return true
+            }
+            return "Please add at least one character"
+        }
+    },
+    {
+        type: "input",
+        name: "id",
+        message: "What is the employees ID? ",
+        validate: id => {
+            //you could write +id instead of parseInt(id)
+            const num = parseInt(id)
+            //isNaN cover if it is not a number or if it is empty(user typed in nothing)
+            if(isNaN(num)) {
+                return "Please insert only numbers"
+            }
+            if(num <= 0){
+                return "Please insert positive numbers"
+            }
+            if(teamId.includes(id)) {
+                return "ID already taken"
+            }
+            return true
+        }
+    },
+    {
+        type: "input",
+        name: "email",
+        message: "What is the employees email? ",
+        validate: email => {
+            const valid = email.match(/^\S+@\S+\.\S+$/)
+            if(valid){
+                return true
+            }
+            return "Please enter a valid email"
+        }
+    },
+    {
+        type: "input",
+        name: "github",
+        message: "What is the employees GitHub username? ",
+        validate: github => {
+            if (github){
+                return true
+            }
+            return "Please add at least one character"
+        }
+    }
+]
 
-function intern() {
-    inquirer.prompt(employeeInfo)
-    .then(res => {
-        console.log(res)
-        inquirer.prompt({
-            type: "input",
-            name: "school",
-            message: "What school is the intern attending? "
-        })
-    })
-}
+const intern = [
+    {
+        type: "input",
+        name: "name",
+        message: "What is the employees name? ",
+        validate: name => {
+            if (name){
+                return true
+            }
+            return "Please add at least one character"
+        }
+    },
+    {
+        type: "input",
+        name: "id",
+        message: "What is the employees ID? ",
+        validate: id => {
+            //you could write +id instead of parseInt(id)
+            const num = parseInt(id)
+            //isNaN cover if it is not a number or if it is empty(user typed in nothing)
+            if(isNaN(num)) {
+                return "Please insert only numbers"
+            }
+            if(num <= 0){
+                return "Please insert positive numbers"
+            }
+            if(teamId.includes(id)) {
+                return "ID already taken"
+            }
+            return true
+        }
+    },
+    {
+        type: "input",
+        name: "email",
+        message: "What is the employees email? ",
+        validate: email => {
+            const valid = email.match(/^\S+@\S+\.\S+$/)
+            if(valid){
+                return true
+            }
+            return "Please enter a valid email"
+        }
+    },
+    {
+        type: "input",
+        name: "school",
+        message: "What school is the intern attending? ",
+        validate: school => {
+            if(school){
+                return true
+            }
+            return "Please enter a school"
+        }
+    }
+]
 
-function manager() {
-    inquirer.prompt(employeeInfo)
-    .then(res => {
-        console.log(res)
-        inquirer.prompt({
-            type: "input",
-            name: "officeNumber",
-            message: "what is the managers office number?  "
-        })
-    })
-}
+const manager = [
+    {
+        type: "input",
+        name: "name",
+        message: "What is the employees name? ",
+        validate: name => {
+            if (name){
+                return true
+            }
+            return "Please add at least one character"
+        }
+    },
+    {
+        type: "input",
+        name: "id",
+        message: "What is the employees ID? ",
+        validate: id => {
+            //you could write +id instead of parseInt(id)
+            const num = parseInt(id)
+            //isNaN cover if it is not a number or if it is empty(user typed in nothing)
+            if(isNaN(num)) {
+                return "Please insert only numbers"
+            }
+            if(num <= 0){
+                return "Please insert positive numbers"
+            }
+            if(teamId.includes(id)) {
+                return "ID already taken"
+            }
+            return true
+        }
+    },
+    {
+        type: "input",
+        name: "email",
+        message: "What is the employees email? ",
+        validate: email => {
+            const valid = email.match(/^\S+@\S+\.\S+$/)
+            if(valid){
+                return true
+            }
+            return "Please enter a valid email"
+        }
+    },
+    {
+        type: "input",
+        name: "officeNumber",
+        message: "what is the managers office number?  ",
+        validate: officeNumber => {
+            const num = parseInt(officeNumber)
+            //isNaN cover if it is not a number or if it is empty(user typed in nothing)
+            if(isNaN(officeNumber)) {
+                return "Please insert only numbers"
+            }
+            if(num <= 0){
+                return "Please insert positive numbers"
+            }
+            return true
+        }
+    }
 
+]
 
-function init(){
+function start() {
     inquirer.prompt(employeeTitle)
-
-    .then(res => {
-        if(res.title === "Engineer"){
-            engineer()
-        } else if(res.title === "Intern"){
-            intern()
-        } else if(res.title === "Manager"){
-            manager()
+    .then(res =>{
+        if (res.title === "Engineer"){
+            inquirer.prompt(engineer)
+            .then(emp => {
+                const eng = new Engineer(emp.name, emp.id, emp.email, emp.github)
+                teamArr.push(eng)
+                teamId.push(emp.id)
+                startNew()
+            })
+            
+        } else if (res.title === "Intern"){
+            inquirer.prompt(intern)
+            .then(emp => {
+                const int = new Intern(emp.name, emp.id, emp.email, emp.school)
+                teamArr.push(int)
+                teamId.push(emp.id)
+                startNew()
+            })
+            
+        } else if (res.title === "Manager"){
+            inquirer.prompt(manager)
+            .then(emp => {
+                const man = new Manager(emp.name, emp.id, emp.email, emp.officeNumber)
+                teamArr.push(man)
+                teamId.push(emp.id)
+                startNew()
+            })
         }
     })
-    
 }
 
-function addNew(){
+function startNew() {
     inquirer.prompt(askNew)
-    .then(res => {
+    .then(res =>{
         if (res.newEmployee === "Yes"){
-            init()
+            start()
         } else if (res.newEmployee === "No"){
-            console("Put render function here")
+           renderTeam()
         }
-       
     })
 }
 
-addNew()
+function renderTeam() {
+    if(!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR)
+    }
+
+    fs.writeFileSync(outputPath, render(teamArr), "utf-8")
+}
+
+start()
+
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
