@@ -23,7 +23,8 @@ Pick the employee you would like to add first. Once you are finished inputing th
 
 ## Questions
 
-GitHub: edgarpena74
+GitHub: [edgarpena74](https://github.com/edgarpena74)
+
 Email: edgarpena0740@gmail.com
 
 ## License
