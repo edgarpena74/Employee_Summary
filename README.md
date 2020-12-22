@@ -21,6 +21,8 @@ The app runs on node. First change the directory to "Develop" then run "node app
 
 Pick the employee you would like to add first. Once you are finished inputing the information, you will be prompted if you would like to add another employee. Once you choose "No" the program will generate a page called team.html where all your employees information will be.
 
+![preview]<img src="https://drive.google.com/file/d/1jk87CzRMmi2D4EEEpQ7Qd5N-Yfg_vabW/preview" width="640" height="480" />
+
 ## Questions
 
 GitHub: [edgarpena74](https://github.com/edgarpena74)
